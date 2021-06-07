@@ -10,15 +10,30 @@ spring:
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/products/**  
+            - Path=/products/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: product-service
+                fallbackuri: forward:/productFallBack
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/orders/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: order-service
+                fallbackuri: forward:/orderFallBack
         - id: payment-service
           uri: lb://payment-service
           predicates:
             - Path=/payments/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: payment-service
+                fallbackuri: forward:/paymentFallback
 
 
 eureka:
@@ -29,3 +44,18 @@ eureka:
       defaultZone: http://localhost:6001/eureka
     instance:
       hostname: localhost
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
