@@ -51,3 +51,12 @@ management:
     web:
       exposure:
         include: hystrix.stream
+
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
