@@ -11,6 +11,9 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/products/**
+          metadata:
+            response-timeout: 10
+            connect-timeout: 10
           filters:
             - name: CircuitBreaker
               args:
@@ -20,6 +23,9 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/orders/**
+          metadata:
+            response-timeout: 10
+            connect-timeout: 10
           filters:
             - name: CircuitBreaker
               args:
@@ -29,6 +35,9 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/payments/**
+          metadata:
+            response-timeout: 10
+            connect-timeout: 10
           filters:
             - name: CircuitBreaker
               args:
