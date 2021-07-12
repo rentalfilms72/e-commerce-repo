@@ -18,5 +18,5 @@ git push -u myorigin master
 
 echo ""
 echo ""
-# pause
+pause
 sleep 30
